@@ -13,6 +13,10 @@ def index():
 def villians():
     return render_template("villians.html")
 
+@app.route('/heroes')
+def heroes():
+    return render_template("heroes.html")
+
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
             port=int(os.environ.get('PORT')),
