@@ -1,0 +1,4 @@
+body {
+ background-image: url("{{url_for ('static' filename='assets/img/wp3891853.jpg')  }}");
+ background-color: #cccccc;
+}
