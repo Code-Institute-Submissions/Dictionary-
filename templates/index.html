@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marvel Heroes</title>
+</head>
+<body>
+     <table border = 1>
+        <tr>
+            {% for header in headers %}
+                <th> {{ header }} </th>
+            {% endfor %}
+        </tr>
+        
+        {% for value in values %}
+            <tr>
+                <td> {{ value.split(",")[0] }} </td>
+                <td> {{ value.split(",")[1] }} </td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
