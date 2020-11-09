@@ -1,5 +1,4 @@
 import os
-from astropy.table import QTable, Table, Column
 from flask import Flask #(Render_tempate, redirect, request, session, url_For)
 from flask import render_template
 from flask import jsonify
@@ -28,13 +27,13 @@ def getHeroes():
     for hero in heroes:
         name = str(hero.get("Name"))
         alias = str(hero.get("Alias"))
-        #appearances = str(hero.get("First Comic Appearance"))
-        #cinematicAppearances = str(hero.get("Marvel Cinematic Appearance"))
+        appearance = str(hero.get("First Comic Appearance"))
+        cinematicAppearances = str(hero.get("Marvel Cinematic Appearance"))
         #playedBy = str(hero.get("Played by"))
         #createdBy = str(hero.get("Created by"))
         data = name + "," + alias
         allData.append(data)
-    headers = ["Name", "Alias"]
+    headers = ["Name", "Alias", "First Comic Appearance", "Marvel Cinematic Appearance"]
     print(allData)
     return render_template('index.html', headers=headers, values=allData)
 
