@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <button type="sumbit" onclick="window.location.href='{{ url_for('index') }}';">Return Home</button>
-    <h2>Find your favourite Heros</h2>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')  }}" type="text/csss">
+     
+    <div id="wrapperHeader">
+    <div id="header">
+             <img src="{{ url_for('static', filename='Marvel.jpg') }}" width="auto" height="200" alt="logo" class="center">
+    </div> 
+</div>
+  <h2>Find your favourite Heros</h2>
+  
     <table style="border = 1">
         <tr>
             {% for header in headers %}
