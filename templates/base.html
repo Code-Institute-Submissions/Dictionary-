@@ -3,14 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Materialize css-->
+
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" type="text/css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" type="text/css">
+     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')  }}" type="text/csss">
+    {% block Styles %}
+    {% endblock %}
+
+
     <title>MARVEL DB</title>
 </head>
 <body>
+<div id="wrapperHeader">
+    <div id="header">
+             <img src="{{ url_for('static', filename='Marvel.jpg') }}" width="auto" height="200" alt="logo" class="center-align">
+    </div> 
+</div>
     <h1 style="center">Search for your Heroes!</h1>
 
     {% block stuff %}
     {% endblock %}
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    {% block scripts %}
+    {% endblock %}
 
 </body>
 </html>

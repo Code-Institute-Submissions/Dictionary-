@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<button type="sumbit" onclick="window.location.href='{{ url_for('index') }}';">Return Home</button>
+    <h2>Find your favourite Villians </h2>
+    <table style="border = 1">
+        <tr>
+            {% for header in headers %}
+                <th> {{ header }} </th>
+            {% endfor %}
+        </tr>
+        
+        {% for value in values %}
+            <tr>
+                <td> {{ value.split(",")[0] }} </td>
+                <td> {{ value.split(",")[1] }} </td>
+                <td> {{ value.split(",")[2] }} </td>
+                <td> {{ value.split(",")[3] }} </td>
+            </tr>
+        {% endfor %}
+    </table>
+</html>
+
