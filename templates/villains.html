@@ -16,18 +16,19 @@
 <body>
 
     <nav class="#d50000 red accent-4">
-    <div class="nav-wrapper">
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a class="active" href="{{ url_for( 'index') }}">Home</a></li>
-        <li><a href="{{ url_for( 'heroes') }}">Heroes</a></li>
-        <li><a href="{{ url_for( 'villains') }}">Villians</a></li>
-      </ul>
-    </div>
-  </nav>
+        <div class="nav-wrapper">
+            <ul class="right hide-on-med-and-down">
+                <li><a href="{{ url_for( 'index') }}">Home</a></li>
+                <li><a class="active" href="{{ url_for( 'heroes') }}">Heroes</a></li>
+                <li><a href="{{ url_for( 'villains') }}">Villians</a></li>
+                <li><a href="{{ url_for( 'registration') }}">Sign-Up</a></li>
+            </ul>
+        </div>
+    </nav>
 
   <div id="wrapperHeader">
     <div id="header">
-             <img src="{{ url_for('static', filename='Marvel.jpg') }}" class="center">
+             <img src="{{ url_for('static', filename='Marvel1.jpg') }}" class="center">
     </div> 
 </div>
 

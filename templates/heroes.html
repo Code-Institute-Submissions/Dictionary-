@@ -12,26 +12,28 @@
 
     <title>Marvel DB - Heroes</title>
 </head>
-<body>
+<body class="#d50000 red accent-4">
     <nav class="#d50000 red accent-4">
-    <div class="nav-wrapper">
-    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="{{ url_for( 'index') }}">Home</a></li>
-        <li><a class="active" href="{{ url_for( 'heroes') }}">Heroes</a></li>
-        <li><a href="{{ url_for( 'villains') }}">Villians</a></li>
-      </ul>
-    </div>
-  </nav>
+        <div class="nav-wrapper">
+            <ul class="right hide-on-med-and-down">
+                <li><a href="{{ url_for( 'index') }}">Home</a></li>
+                <li><a class="active" href="{{ url_for( 'heroes') }}">Heroes</a></li>
+                <li><a href="{{ url_for( 'villains') }}">Villians</a></li>
+                <li><a href="{{ url_for( 'register') }}">Sign-Up</a></li>
+            </ul>
+        </div>
+    </nav>
         
     <div id="wrapperHeader">
     <div id="header">
-             <img src="{{ url_for('static', filename='Marvel.jpg') }}" class="center">
+             <img src="{{ url_for('static', filename='Marvel1.jpg') }}" class="center">
     </div> 
     </div>
 
-  <h2 class="center">Find your favourite Heros</h2>
-  
+  <input type="text" placeholder="Search For Your Favourite Heroes" name="search">
+  <button 
+  type="submit"><i class="fa fa-search"></i></button>
+
     <table style="border = 1">
         <tr>
             {% for header in headers %}

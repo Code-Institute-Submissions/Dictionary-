@@ -5,6 +5,7 @@ from flask import request
 from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import DataRequired
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_pymongo import pymongo
 from pymongo import MongoClient
 
@@ -116,6 +117,11 @@ def villains():
         headers=headers,
         values=villainData
     )
+
+
+    @app.route("/register/", methods=["GET", "POST"])
+    def register():
+        return render_template("register.html")
 
 
 if __name__ == '__main__':

@@ -15,12 +15,15 @@
 
 
 <body>
+
     <div id="wrapperHeader">
-    <div id="header">
-             <img src="{{ url_for('static', filename='Marvel.jpg') }}" class="center">
-    </div> 
-</div>
+        <div id="header">
+             <img src="{{ url_for('static', filename='Marvel1.jpg') }}" class="center">
+        </div> 
+    </div>
+
     <h3 class="center" >Pick a side</h3>
+
     <button type="sumbit" onclick="window.location.href='{{ url_for( 'heroes') }}';" class="center">Heroes</button>
     <button type="sumbit" onclick="window.location.href='{{ url_for( 'villains') }}';" class="center">Villains</button>
 
