@@ -3,23 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
 
-    <!--Materialize css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+        integrity="sha512-xA6Hp6oezhjd6LiLZynuukm80f8BoZ3OpcEYaqKoCV3HKQDrYjDE1Gu8ocxgxoXmwmSzM4iqPvCsOkQNiu41GA==" crossorigin="anonymous" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
 
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" type="text/css">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" type="text/css">
-     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')  }}" type="text/csss">
-
-    <title>Heroes</title>
+    <title>Marvel DB</title>
 </head>
+
+
 <body>
     <div id="wrapperHeader">
     <div id="header">
-             <img src="{{ url_for('static', filename='Marvel.jpg') }}" width="auto" height="200" alt="logo" class="center">
+             <img src="{{ url_for('static', filename='Marvel.jpg') }}" class="center">
     </div> 
 </div>
-    <h3>Pick a side</h3>
-    <button type="sumbit" onclick="window.location.href='{{ url_for( 'heroes') }}';">Heroes</button>
-    <button type="sumbit" onclick="window.location.href='{{ url_for( 'villains') }}';">Villains</button>
+    <h3 class="center" >Pick a side</h3>
+    <button type="sumbit" onclick="window.location.href='{{ url_for( 'heroes') }}';" class="center">Heroes</button>
+    <button type="sumbit" onclick="window.location.href='{{ url_for( 'villains') }}';" class="center">Villains</button>
+
+    </body>
 </html>
 

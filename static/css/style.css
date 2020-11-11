@@ -1,6 +1,6 @@
 body { 
     background-image: url('Marvel.jpg');
-
+    background-colour: ed1d24;
 }
 
 .center {
@@ -8,4 +8,9 @@ body {
   margin-left: auto;
   margin-right: auto;
   width: 50%;
+}
+
+
+.red { 
+    background-color:  !important;
 }
