@@ -9,11 +9,13 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
         integrity="sha512-xA6Hp6oezhjd6LiLZynuukm80f8BoZ3OpcEYaqKoCV3HKQDrYjDE1Gu8ocxgxoXmwmSzM4iqPvCsOkQNiu41GA==" crossorigin="anonymous" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" type="text/css">
+
+    <!--Custom CSS-->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
 
     <title>Villians</title>
 </head>
-<body>
+<body class="#d50000 red accent-4">
 
     <nav class="#d50000 red accent-4">
         <div class="nav-wrapper">
@@ -21,7 +23,7 @@
                 <li><a href="{{ url_for( 'index') }}">Home</a></li>
                 <li><a class="active" href="{{ url_for( 'heroes') }}">Heroes</a></li>
                 <li><a href="{{ url_for( 'villains') }}">Villians</a></li>
-                <li><a href="{{ url_for( 'registration') }}">Sign-Up</a></li>
+                <li><a href="{{ url_for( 'register') }}">Sign-Up</a></li>
             </ul>
         </div>
     </nav>

@@ -1,5 +1,5 @@
 import os
-from flask import Flask #(Render_tempate, redirect, request, session, url_For)
+from flask import Flask
 from flask import render_template
 from flask import request
 from flask_wtf import FlaskForm
@@ -75,6 +75,9 @@ def index():
         elif 'Villains' in request.form:
             # return villain page
             render_template('villains.html')
+            'Register' in request.form
+            # return register page
+            render_template('register.html')
     # No button pressed, return home page
     return render_template('index.html')
 
@@ -119,9 +122,9 @@ def villains():
     )
 
 
-    @app.route("/register/", methods=["GET", "POST"])
-    def register():
-        return render_template("register.html")
+@app.route("/register/", methods=["GET", "POST"])
+def register():
+    return render_template("register.html")
 
 
 if __name__ == '__main__':
