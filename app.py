@@ -1,7 +1,11 @@
 import os
 from flask import Flask
+from flask import redirect
 from flask import render_template
 from flask import request
+from flask import flash
+from flask import session
+from flask import url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import DataRequired
@@ -124,7 +128,38 @@ def villains():
 
 @app.route("/register/", methods=["GET", "POST"])
 def register():
-    return render_template("register.html")
+    if request.method == "POST":
+        # Set variables
+        username = request.form['username']
+        password = request.form['password']
+
+        # checks if username already exists in db
+        connection = MongoClient(databaseConnection)
+        db = connection.marvelHeroes
+        # Set Collection we should use
+        collection = db["users"]
+        # Get ALL the data
+        existing_user = collection.find_one(
+            {"username": username}
+        )
+
+        if existing_user:
+            flash("Username already exists")
+            print("Username already exists")
+            return redirect(url_for('register'))
+
+        register = {
+            "username": username,
+            "password": generate_password_hash(password)
+        }
+        collection.insert_one(register)
+
+        # Put the new user into 'session' cookie
+        session["user"] = username
+        flash("Registration Successfull")
+        return redirect(url_for('register'))
+    else:
+        return render_template("register.html")
 
 
 if __name__ == '__main__':
