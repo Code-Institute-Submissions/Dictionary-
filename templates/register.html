@@ -51,14 +51,16 @@
 			    <div class="row margin">
 				    <div class="input-field col s12">
 					    <i class="mdi-social-person-outline prefix"></i>
-					    <input name = "username" id="user_name" type="text" class="validate" placeholder="Username">
+					    <input name = "username" id="user_name" type="text" milength="8" 
+                    maxlength="15" pattern="^[a-zA-Z0-9]${5, 15}" class="validate" placeholder="Username">
 					    <label for="user_name" class="center-align"></label>
 				    </div>
 			    </div>        
 			<div class="row margin">
 				<div class="input-field col s12">
 					<i class="mdi-action-lock-outline prefix"></i>
-					<input name="password" id="user_passw" type="password" class="validate" placeholder="password">
+					<input name="password" id="user_passw" type="password" milength="8" 
+                    maxlength="15" pattern="^[a-zA-Z0-9]${5, 15}" class="validate" placeholder="password">
 					<label for="user_passw" class="#d50000 red accent-4" ></label>
 				</div>
 			<div class="row">
