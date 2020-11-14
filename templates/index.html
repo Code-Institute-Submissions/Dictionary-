@@ -24,8 +24,12 @@
 
     <h3 class="center" >Pick a side</h3>
 
-    <button type="sumbit" onclick="window.location.href='{{ url_for( 'heroes') }}';" class="center">Heroes</button>
-    <button type="sumbit" onclick="window.location.href='{{ url_for( 'villains') }}';" class="center">Villains</button>
+    <div class="center-align">
+        <a class="waves-effect waves-light btn-large #d50000 red accent-4" onclick="window.location.href='{{ url_for( 'heroes') }}';">Heroes</a>
+    </div>
+    <div class="center-align"><br>
+        <a class="waves-effect waves-light btn-large #d50000 red accent-4" onclick="window.location.href='{{ url_for( 'villains') }}';">Villains</a>
+    </div>
 
     </body>
 </html>
