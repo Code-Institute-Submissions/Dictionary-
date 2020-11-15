@@ -13,19 +13,14 @@
     <!--Custom CSS-->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
 
-    <title>Marvel DB - Register/log in</title>
+    <title>Marvel DB - log in</title>
 
 </head>
+
 <body class="#d50000 red accent-4">
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul class="flashes">
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
+
+<h1 class="center"> Log in </h1>
+
        <nav class="#d50000 red accent-4">
         <div class="nav-wrapper">
             <ul class="right hide-on-med-and-down">
@@ -37,14 +32,22 @@
         </div>
     </nav>
 
-<div id="wrapperHeader">
+    <div id="wrapperHeader">
         <div id="header">
              <img src="{{ url_for('static', filename='Marvel1.jpg') }}" class="center">
         </div> 
     </div>
 
-    <h1 class="center"> Sign-Up </h1>
-
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
 <div id="register-page" class="row">
         <div class="card-panel container center">
 		    <form class="register-form" method="post">        
@@ -56,24 +59,35 @@
 					    <label for="user_name" class="center-align"></label>
 				    </div>
 			    </div>        
-			<div class="row margin">
-				<div class="input-field col s12">
-					<i class="mdi-action-lock-outline prefix"></i>
+		<div class="row margin">
+			<div class="input-field col s12">
+				<i class="mdi-action-lock-outline prefix"></i>
 					<input id="user_passw" name="password" type="password" milength="8" 
                     maxlength="15" pattern="^[a-zA-Z0-9]{5, 15}$" class="validate" placeholder="password" required>
 					<label for="user_passw" class="#d50000 red accent-4" ></label>
-				</div>
-			<div class="row">
-				<div class="input-field col s12">
-                    <button type="sumbit" formmethod="post" onclick="window.location.href='{{ url_for('register') }}';" class="btn waves-effect #d50000 red accent-4 col s12">register Now</button>
-				</div>
-				<div class="input-field col s12">
-					<p class="margin center medium-small sign-up">Already have an account? <a href="login.php">Login</a></p>
-				</div>
 			</div>
-        </div>
-		</form>
-        </div>
+        </div>    
+	    <div class="row">
+			<div class="input-field col s12">
+                <button type="sumbit" formmethod="post" onclick="window.location.href='{{ url_for('register') }}';" class="btn waves-effect #d50000 red accent-4 col s12">
+                    Log in</button>
+			</div>
+			<div class="input-field col s12">
+				<p class="margin center medium-small sign-up">Already have an account? <a href="login.php">Login</a></p>
+			</div>
+		</div>
+        </form>
+    </div>
+</div>
+		   
+
+<div class="row">
+    <div class="col 12">
+        <p class="center-align">
+             New here?
+                <a href="{{ url_for( 'register') }" class="#d50000 red accent-4"></a>
+        </p>
+    </div> 
 </div>
 
 </body>
