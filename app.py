@@ -35,6 +35,32 @@ databaseConnection = os.environ.get("MONGO_URI")
 dbName = os.environ.get("MONGO_DBNAME")
 
 
+# Replace function
+def replace(data):
+    data = data.replace(",", "@")
+    return data
+
+
+# userName check
+def authCheck(string, dataType):
+    # mMin 5
+    if len(string) < 5:
+        flash("Ensure " + dataType + " has a minumim of 5 characters")
+        return(bool(False))
+
+    # Max 15
+    if len(string) > 15:
+        flash("Ensure " + dataType + " username has a maximum of 15 characters")
+        return(bool(False))
+
+    # No spaces
+    if " " in string:
+        flash("Spaces not allowed in " + dataType)
+        return(bool(False))
+
+    return(bool(True))
+
+
 # Get Data function and process
 def getData(database):
     # Connect Database
@@ -56,8 +82,17 @@ def getData(database):
         playedBy = str(d.get("Played by"))
         createdBy = str(d.get("Created by"))
 
+        # Replace , with #
+        name = replace(name)
+        alias = replace(alias)
+        appearance = replace(appearance)
+        cinematicAppearances = replace(cinematicAppearances)
+        playedBy = replace(playedBy)
+        createdBy = replace(createdBy)
+
         # Initialise into a single string
-        data = name + "," + alias
+        data = name + "," + alias + "," + appearance + "," + cinematicAppearances + "," + playedBy + "," + createdBy
+
         # Add to global array
         allData.append(data)
     # return Data
@@ -95,8 +130,8 @@ def heroes():
         "Name",
         "Alias",
         "First Comic Appearance",
-        "Marvel Cinematic Appearance"
-        "Played By"
+        "Marvel Cinematic Appearance",
+        "Played By",
         "Created By"
     ]
     # return Hers page
@@ -117,7 +152,9 @@ def villains():
         "Name",
         "Alias",
         "First Comic Appearance",
-        "Marvel Cinematic Appearance"
+        "Marvel Cinematic Appearance",
+        "Played By",
+        "Created By"
     ]
     # Return villains page
     return render_template(
@@ -126,7 +163,8 @@ def villains():
         values=villainData
     )
 
-#register page 
+
+# Register page
 @app.route("/register/", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -134,33 +172,40 @@ def register():
         username = request.form['username']
         password = request.form['password']
 
-        # checks if username already exists in db
-        connection = MongoClient(databaseConnection)
-        db = connection.marvelHeroes
-        # Set Collection we should use
-        collection = db["users"]
-        # Get ALL the data
-        existing_user = collection.find_one(
-            {"username": username}
-        )
+        # Run auth checks
+        userCheck = authCheck(username, "username")
+        passCheck = authCheck(password, "password")
 
-        if existing_user:
-            flash("Username already exists")
-            print("Username already exists")
+        if userCheck is not True or passCheck is not True:
             return redirect(url_for('register'))
+        else:
+            # Checks if username already exists in db
+            connection = MongoClient(databaseConnection)
+            db = connection.marvelHeroes
+            # Set Collection we should use
+            collection = db["users"]
+            # Get ALL the data
+            existing_user = collection.find_one(
+                {"username": username}
+            )
 
-        register = {
-            "username": username,
-            "password": generate_password_hash(password)
-        }
-        collection.insert_one(register)
+            if existing_user:
+                flash("Username already exists")
+                return redirect(url_for('register'))
 
-        # Put the new user into 'session' cookie
-        session["user"] = username
-        flash("Registration Successfull")
-        return redirect(url_for('register'))
+            register = {
+                "username": username,
+                "password": generate_password_hash(password)
+            }
+            collection.insert_one(register)
+
+            # Put the new user into 'session' cookie
+            session["user"] = username
+            flash("Registration Successfull")
+            return redirect(url_for('register'))
     else:
-        return render_template("register.html")
+        return render_template('register.html')
+
 
 # Log-in page
 @app.route("/login/", methods=["GET", "POST"])

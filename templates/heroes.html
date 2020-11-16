@@ -40,10 +40,36 @@
         
         {% for value in values %}
             <tr>
-                <td> {{ value.split(",")[0] }} </td>
-                <td> {{ value.split(",")[1] }} </td>
-                <td> {{ value.split(",")[2] }} </td>
-                <td> {{ value.split(",")[3] }} </td>
+                <td>
+                    {% for name in value.split(",")[0].split("@") %}
+                        {{ name }} <br>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for name in value.split(",")[1].split("@") %}
+                        {{ name }} <br>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for name in value.split(",")[2].split("@") %}
+                        {{ name }} <br>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for name in value.split(",")[3].split("@") %}
+                        {{ name }} <br>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for name in value.split(",")[4].split("@") %}
+                        {{ name }} <br>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for name in value.split(",")[5].split("@") %}
+                        {{ name }} <br>
+                    {% endfor %}
+                </td>
             </tr>
         {% endfor %}
     </table>

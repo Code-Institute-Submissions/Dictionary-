@@ -17,16 +17,7 @@
 
 </head>
 <body background=" {{ url_for('static', filename='css/img/background.jpg') }}">
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul class="flashes">
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
-       <nav class="#d50000 red accent-4">
+    <nav class="#d50000 red accent-4">
         <div class="nav-wrapper">
             <ul class="right hide-on-med-and-down">
                 <li><a href="{{ url_for( 'index') }}">Home</a></li>
@@ -37,44 +28,50 @@
         </div>
     </nav>
 
-<div id="wrapperHeader">
+    <div id="wrapperHeader">
         <div id="header">
-             <img src="{{ url_for('static', filename='Marvel1.jpg') }}" class="center">
+            <img src="{{ url_for('static', filename='Marvel1.jpg') }}" class="center">
         </div> 
     </div>
 
     <h1 class="center white-text text-lighten-2"> Sign-Up </h1>
 
-<div id="register-page" class="row">
+    <div id="register-page" class="row">
         <div class="card-panel container center">
-		    <form class="register-form" method="post">        
+		    <form method="post">        
 			    <div class="row margin">
 				    <div class="input-field col s12">
 					    <i class="mdi-social-person-outline prefix"></i>
-					    <input id="user_name" name = "username" type="text" minlength="8" 
-                    maxlength="15" pattern="^[a-zA-Z0-9]{5, 15}$" class="validate" placeholder="Username" required>
+					    <input id="user_name" name = "username" type="text" class="validate" placeholder="Username" required>
 					    <label for="user_name" class="center-align"></label>
 				    </div>
 			    </div>        
-			<div class="row margin">
-				<div class="input-field col s12">
-					<i class="mdi-action-lock-outline prefix"></i>
-					<input id="user_passw" name="password" type="password" minlength="8" 
-                    maxlength="15" pattern="^[a-zA-Z0-9]{5, 15}$" class="validate" placeholder="password" required>
-					<label for="user_passw" class="#d50000 red accent-4" ></label>
-				</div>
-			<div class="row">
-				<div class="input-field col s12">
-                    <button type="sumbit" formmethod="post" onclick="window.location.href='{{ url_for('register') }}';" class="btn waves-effect #d50000 red accent-4 col s12">register Now</button>
-				</div>
-				<div class="input-field col s12">
-					<p class="margin center medium-small sign-up">Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
-				</div>
-			</div>
+			    <div class="row margin">
+				    <div class="input-field col s12">
+				    	<i class="mdi-action-lock-outline prefix"></i>
+				    	<input id="user_passw" name="password" type="password" class="validate" placeholder="password required">
+					    <label for="user_passw" class="#d50000 red accent-4" ></label>
+				    </div>
+			        <div class="row">
+				        <div class="input-field col s12">
+                            <button type="submit" formmethod="post" onclick="window.location.href='{{ url_for( 'register' ) }}';" class="btn waves-effect #d50000 red accent-4 col s12">register Now</button>
+                        </div>
+                        {% with messages = get_flashed_messages() %}
+                            {%  if messages %}
+                                <ul class="flashes">
+                                    {% for message in messages %}
+                                        <li style="color:red">{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% endwith %}
+				        <div class="input-field col s12">
+					        <p class="margin center medium-small sign-up">Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+				        </div>
+			        </div>
+                </div>
+		    </form>
         </div>
-		</form>
-        </div>
-</div>
-
+    </div>
 </body>
 </html>
