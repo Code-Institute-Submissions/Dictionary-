@@ -14,7 +14,7 @@
 </head>
 
 
-<body class="#d50000 red accent-4">
+<body background=" {{ url_for('static', filename='css/img/background.jpg') }}">
 
     <div id="wrapperHeader">
         <div id="header">
@@ -22,12 +22,10 @@
         </div> 
     </div>
 
-    <h3 class="center" >Pick a side</h3>
-<div class="card-panel container center">
+    <h3 class="center white-text text-lighten-2">Pick a side</h3>
+<div class="center">
     <div class="center-align">
         <a class="waves-effect waves-light btn-large #d50000 red accent-4" onclick="window.location.href='{{ url_for( 'heroes') }}';">Heroes</a>
-    </div>
-    <div class="center-align"><br>
         <a class="waves-effect waves-light btn-large #d50000 red accent-4" onclick="window.location.href='{{ url_for( 'villains') }}';">Villains</a>
     </div>
 </div>

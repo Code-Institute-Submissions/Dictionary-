@@ -15,7 +15,7 @@
 
     <title>Villians</title>
 </head>
-<body class="#d50000 red accent-4">
+<body background=" {{ url_for('static', filename='css/img/background.jpg') }}">
 
     <nav class="#d50000 red accent-4">
         <div class="nav-wrapper">
@@ -34,7 +34,8 @@
     </div> 
 </div>
 
-    <h2 class="center">Find your favourite Villians </h2>
+    <h2 class="center white-text text-lighten-2">Find your Favourite Villians </h2>
+    <div class="container #e0e0e0 grey lighten-2">
     <table style="border = 1">
         <tr>
             {% for header in headers %}
@@ -48,9 +49,12 @@
                 <td> {{ value.split(",")[1] }} </td>
                 <td> {{ value.split(",")[2] }} </td>
                 <td> {{ value.split(",")[3] }} </td>
+                <td> {{ value.split(",")[4] }} </td>
+                <td> {{ value.split(",")[5] }} </td>
             </tr>
         {% endfor %}
     </table>
+</div>
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"

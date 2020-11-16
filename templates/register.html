@@ -16,7 +16,7 @@
     <title>Marvel DB - Register/log in</title>
 
 </head>
-<body class="#d50000 red accent-4">
+<body background=" {{ url_for('static', filename='css/img/background.jpg') }}">
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <ul class="flashes">
@@ -43,7 +43,7 @@
         </div> 
     </div>
 
-    <h1 class="center"> Sign-Up </h1>
+    <h1 class="center white-text text-lighten-2"> Sign-Up </h1>
 
 <div id="register-page" class="row">
         <div class="card-panel container center">
@@ -68,7 +68,7 @@
                     <button type="sumbit" formmethod="post" onclick="window.location.href='{{ url_for('register') }}';" class="btn waves-effect #d50000 red accent-4 col s12">register Now</button>
 				</div>
 				<div class="input-field col s12">
-					<p class="margin center medium-small sign-up">Already have an account? <a href="login.php">Login</a></p>
+					<p class="margin center medium-small sign-up">Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
 				</div>
 			</div>
         </div>

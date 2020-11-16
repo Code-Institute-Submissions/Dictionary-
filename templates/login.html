@@ -17,9 +17,9 @@
 
 </head>
 
-<body class="#d50000 red accent-4">
+<body background=" {{ url_for('static', filename='css/img/background.jpg') }}">
 
-<h1 class="center"> Log in </h1>
+
 
        <nav class="#d50000 red accent-4">
         <div class="nav-wrapper">
@@ -48,6 +48,7 @@
             </ul>
         {% endif %}
     {% endwith %}
+    <h1 class="center white-text text-lighten-2"> Log in </h1>
 <div id="register-page" class="row">
         <div class="card-panel container center">
 		    <form class="register-form" method="post">        
@@ -78,16 +79,6 @@
 		</div>
         </form>
     </div>
-</div>
-		   
-
-<div class="row">
-    <div class="col 12">
-        <p class="center-align">
-             New here?
-                <a href="{{ url_for( 'register') }" class="#d50000 red accent-4"></a>
-        </p>
-    </div> 
 </div>
 
 </body>

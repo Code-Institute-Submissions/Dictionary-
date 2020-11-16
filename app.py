@@ -51,12 +51,11 @@ def getData(database):
         # Get5 Values out of data
         name = str(d.get("Name"))
         alias = str(d.get("Alias"))
-        """
         appearance = str(d.get("First Comic Appearance"))
         cinematicAppearances = str(d.get("Marvel Cinematic Appearance"))
         playedBy = str(d.get("Played by"))
         createdBy = str(d.get("Created by"))
-        """
+
         # Initialise into a single string
         data = name + "," + alias
         # Add to global array
@@ -97,6 +96,8 @@ def heroes():
         "Alias",
         "First Comic Appearance",
         "Marvel Cinematic Appearance"
+        "Played By"
+        "Created By"
     ]
     # return Hers page
     return render_template(
@@ -125,7 +126,7 @@ def villains():
         values=villainData
     )
 
-
+#register page 
 @app.route("/register/", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -160,6 +161,11 @@ def register():
         return redirect(url_for('register'))
     else:
         return render_template("register.html")
+
+# Log-in page
+@app.route("/login/", methods=["GET", "POST"])
+def login():
+    return render_template('login.html')
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
-body { 
-    background-image: url('Marvel.jpg');
-    background-colour: ed1d24;
+body {
+ background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 
