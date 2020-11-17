@@ -80,7 +80,7 @@ def getData(database):
         appearance = str(d.get("First Comic Appearance"))
         cinematicAppearances = str(d.get("Marvel Cinematic Appearance"))
         playedBy = str(d.get("Played by"))
-        createdBy = str(d.get("Created by"))
+        createdBy = str(d.get("Created By"))
 
         # Replace , with #
         name = replace(name)
@@ -91,7 +91,7 @@ def getData(database):
         createdBy = replace(createdBy)
 
         # Initialise into a single string
-        data = name + "," + alias + "," + appearance + "," + cinematicAppearances + "," + playedBy + "," + createdBy
+        data = name + "," + alias + "," + appearance + ","  + cinematicAppearances + "," + playedBy  + ","  + createdBy
 
         # Add to global array
         allData.append(data)
@@ -202,15 +202,48 @@ def register():
             # Put the new user into 'session' cookie
             session["user"] = username
             flash("Registration Successfull")
-            return redirect(url_for('register'))
+            return render_template("profile.html", username=username)
     else:
         return render_template('register.html')
 
 
 # Log-in page
-@app.route("/login/", methods=["GET", "POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template('login.html')
+    if request.method == "POST":
+        username = request.form['username']
+        password = request.form['password']
+
+        connection = MongoClient(databaseConnection)
+        db = connection.marvelHeroes
+        # Set Collection we should use
+        collection = db["users"]
+        # Get ALL the data
+        existing_user = collection.find_one(
+            {"username": username}
+        )
+
+        if existing_user:
+            # ensure hashed password matches user input
+            if check_password_hash(existing_user["password"], password):
+                lowUser = username.lower()
+                session["user"] = username
+                flash("Welcome, {}".format(username))
+                return render_template("profile.html", username=lowUser)
+            else:
+                # invalid password match
+                flash("Incorrect Username and/or Password")
+                return redirect(url_for("login"))
+        else:
+            # username doesn't exist
+            flash("Incorrect Username and/or Password")
+            return redirect(url_for("login"))
+    return render_template("login.html")
+
+
+@app.route("/profile", methods=["GET", "POST"])
+def profile(username):
+    return render_template("profile.html", username=username)
 
 
 if __name__ == '__main__':

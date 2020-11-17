@@ -9,28 +9,39 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
         integrity="sha512-xA6Hp6oezhjd6LiLZynuukm80f8BoZ3OpcEYaqKoCV3HKQDrYjDE1Gu8ocxgxoXmwmSzM4iqPvCsOkQNiu41GA==" crossorigin="anonymous" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" type="text/css">
-
-    <!--Custom CSS-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
 
     <title>Marvel DB - log in</title>
 
 </head>
 
-<body background=" {{ url_for('static', filename='css/img/background.jpg') }}">
+<body background=" {{ url_for('static', filename='css/img/background.jpg') }}" class="background  ">
 
-
-
-       <nav class="#d50000 red accent-4">
-        <div class="nav-wrapper">
+<body background="{{ url_for('static', filename='css/img/background.jpg') }}">
+    <nav class="nav-wrapper transparent">
+        <div class="conatainer">
+            <a href="#" class="sidenav-trigger" data-target="mobile-links">
+            <i class="material-icons">menu</i>
+            </a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="{{ url_for( 'index') }}">Home</a></li>
-                <li><a class="active" href="{{ url_for( 'heroes') }}">Heroes</a></li>
+                <li><a href="{{ url_for( 'heroes') }}">Heroes</a></li>
+                <li><a href="{{ url_for( 'villains') }}">Villians</a></li>
+                <li><a href="{{ url_for( 'register') }}">Sign-Up</a></li>
+                <li><a href="{{ url_for( 'profile') }}"><i class="material-icons">account_box</i></a></li>
+            </ul>
+          
+        
+        </div>
+    </nav>
+    <ul class="sidenav" id="mobile-links">
+                <li><a href="{{ url_for( 'index') }}">Home</a></li>
+                <li><a href="{{ url_for( 'heroes') }}">Heroes</a></li>
                 <li><a href="{{ url_for( 'villains') }}">Villians</a></li>
                 <li><a href="{{ url_for( 'register') }}">Sign-Up</a></li>
             </ul>
-        </div>
-    </nav>
 
     <div id="wrapperHeader">
         <div id="header">
@@ -70,7 +81,7 @@
         </div>    
 	    <div class="row">
 			<div class="input-field col s12">
-                <button type="sumbit" formmethod="post" onclick="window.location.href='{{ url_for('register') }}';" class="btn waves-effect #d50000 red accent-4 col s12">
+                <button type="sumbit" formmethod="post" onclick="window.location.href='{{ url_for('profile') }}';" class="btn waves-effect #d50000 red accent-4 col s12">
                     Log in</button>
 			</div>
 			<div class="input-field col s12">
