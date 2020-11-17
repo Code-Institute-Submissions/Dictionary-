@@ -43,7 +43,7 @@ def replace(data):
 
 # userName check
 def authCheck(string, dataType):
-    # mMin 5
+    # Min 5
     if len(string) < 5:
         flash("Ensure " + dataType + " has a minumim of 5 characters")
         return(bool(False))

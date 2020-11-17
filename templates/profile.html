@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Materialize css-->
+
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+        integrity="sha512-xA6Hp6oezhjd6LiLZynuukm80f8BoZ3OpcEYaqKoCV3HKQDrYjDE1Gu8ocxgxoXmwmSzM4iqPvCsOkQNiu41GA==" crossorigin="anonymous" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" type="text/css">
+
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+
+    <title>Marvel DB - log in</title>
+
+</head>
+
+<body background=" {{ url_for('static', filename='css/img/background.jpg') }}">
+
+
+
+       <nav class="#d50000 red accent-4">
+        <div class="nav-wrapper">
+            <ul class="right hide-on-med-and-down">
+                <li><a href="{{ url_for( 'index') }}">Home</a></li>
+                <li><a class="active" href="{{ url_for( 'heroes') }}">Heroes</a></li>
+                <li><a href="{{ url_for( 'villains') }}">Villians</a></li>
+                <li><a href="{{ url_for( 'register') }}">Sign-Up</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="wrapperHeader">
+        <div id="header">
+             <img src="{{ url_for('static', filename='Marvel1.jpg') }}" class="center">
+        </div> 
+    </div>
+
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <h1 class="center white-text text-lighten-2"> Log in </h1>
+<div id="register-page" class="row">
+        <div class="card-panel container center">
+		    <form class="register-form" method="post">        
+			    <div class="row margin">
+				    <div class="input-field col s12">
+					    <i class="mdi-social-person-outline prefix"></i>
+					    <input id="user_name" name = "username" type="text" milength="8" 
+                    maxlength="15" pattern="^[a-zA-Z0-9]{5, 15}$" class="validate" placeholder="Username" required>
+					    <label for="user_name" class="center-align"></label>
+				    </div>
+			    </div>        
+		<div class="row margin">
+			<div class="input-field col s12">
+				<i class="mdi-action-lock-outline prefix"></i>
+					<input id="user_passw" name="password" type="password" milength="8" 
+                    maxlength="15" pattern="^[a-zA-Z0-9]{5, 15}$" class="validate" placeholder="password" required>
+					<label for="user_passw" class="#d50000 red accent-4" ></label>
+			</div>
+        </div>    
+	    <div class="row">
+			<div class="input-field col s12">
+                <button type="sumbit" formmethod="post" onclick="window.location.href='{{ url_for('register') }}';" class="btn waves-effect #d50000 red accent-4 col s12">
+                    Log in</button>
+			</div>
+			<div class="input-field col s12">
+				<p class="margin center medium-small sign-up">Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+			</div>
+		</div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
