@@ -80,7 +80,7 @@ def getData(database):
         appearance = str(d.get("First Comic Appearance"))
         cinematicAppearances = str(d.get("Marvel Cinematic Appearance"))
         playedBy = str(d.get("Played by"))
-        createdBy = str(d.get("Created By"))
+        createdBy = str(d.get("Created by"))
 
         # Replace , with #
         name = replace(name)
