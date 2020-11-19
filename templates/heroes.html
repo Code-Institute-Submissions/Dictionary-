@@ -43,14 +43,30 @@
     </div> 
     </div>
 
+   <div>
+<nav>
+    <div class="nav-wrapper center">
+      <form>
+        <div class="input-field grey lighten-2">
+          <input id="search" type="search" required>
+          <label for="search"><i class="material-icons">search</i></label>
+          <!-- I've put "red-text" class to emphasize -->
+          <i class="material-icons red-text">close</i>
+        </div>
+      </form>
+    </div>
+  </nav>
+</div>
+
 <div class="container #e0e0e0 grey lighten-2"> 
     <table style="border = 1">
+       
+
         <tr>
             {% for header in headers %}
                 <th> {{ header }} </th>
             {% endfor %}
-        </tr>
-        
+        </tr>     
         {% for value in values %}
             <tr>
                 <td>
@@ -85,7 +101,7 @@
                 </td>
             </tr>
         {% endfor %}
-    </table>
+    </table> 
 </div>
 
 

@@ -246,6 +246,15 @@ def profile(username):
     return render_template("profile.html", username=username)
 
 
+@app.route("/add_hero")
+def add_hero():
+    return render_template("add_villain.html")
+
+
+@app.route("/add_villain")
+def add_villain():
+    return render_template("add_villain.html")
+
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
             port=int(os.environ.get('PORT')),
