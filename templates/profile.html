@@ -41,20 +41,18 @@
                 <li><a href="{{ url_for( 'register') }}">Sign-Up</a></li>
             </ul>
 
-    <div id="wrapperHeader">
+    <div class="center" id="wrapperHeader">
         <div id="header">
 	        <h1>Welcome {{ username }}</h1>
         </div>
     </div>
 
-    <div class="containter">
-        <h1> Add hero</h1>
-
-    <button href="{{ url_for( 'add_hero') }}"></button>
-        <h1> Add Villain</h1>
-    <button href="{{ url_for( 'add_villain') }}"></button>
+    <div class="center">
+    <div class="center-align">
+        <a class="waves-effect waves-light btn-large #d50000 red accent-4" style="margin-bottom: 25px;" onclick="window.location.href='{{ url_for( 'add_hero') }}';">Add a Hero</a>
+        <a class="waves-effect waves-light btn-large #d50000 red accent-4" style="margin-bottom: 25px;" onclick="window.location.href='{{ url_for( 'add_villain') }}';">Add A Villain</a>
     </div>
-
+</div>
     
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

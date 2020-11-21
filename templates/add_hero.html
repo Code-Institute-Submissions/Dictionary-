@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport"><!--Materialize css-->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css"><!--Custom CSS-->
+	<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css">
+
+	<title>Marvel DB - Add A Hero</title>
+
+</head>
+<body background="{{  url_for('static',  filename='css/img/background.jpg')  }}">
+	<nav class="nav-wrapper transparent">
+		<div class="conatainer">
+			<a class="sidenav-trigger" data-target="mobile-links" href="#"><i class="material-icons">menu</i></a>
+			<ul class="right hide-on-med-and-down">
+				<li>
+					<a href="{{  url_for(  'index')  }}">Home</a>
+				</li>
+				<li>
+					<a href="{{  url_for(  'heroes')  }}">Heroes</a>
+				</li>
+				<li>
+					<a href="{{  url_for(  'villains')  }}">Villians</a>
+				</li>
+				<li>
+					<a href="{{  url_for(  'register')  }}">Sign-Up</a>
+				</li>
+				<li>
+					<a href="{{  url_for(  'profile')  }}"><i class="material-icons">account_box</i></a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<ul class="sidenav" id="mobile-links">
+		<li>
+			<a href="{{  url_for(  'index')  }}">Home</a>
+		</li>
+		<li>
+			<a href="{{  url_for(  'heroes')  }}">Heroes</a>
+		</li>
+		<li>
+			<a href="{{  url_for(  'villains')  }}">Villians</a>
+		</li>
+		<li>
+			<a href="{{  url_for(  'register')  }}">Sign-Up</a>
+		</li>
+	</ul>
+	<div id="wrapperHeader">
+		<div id="header"><img class="center" src="{{  url_for('static',  filename='Marvel1.jpg')  }}"></div>
+	</div>
+	<h1 class="center white-text text-lighten-2">Sign-Up</h1>
+	<div class="containter white-text text-lighten-2">
+			<div class="row">
+				<form class="col s12">
+					<div class="row">
+						<div class="input-field col s6">
+							<input class="validate" id="first_name" placeholder="Placeholder" type="text"> <label for="Name">Name</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<input class="validate" disabled id="disabled" type="text" value="I am not editable"> <label for="alias">Alias</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<input class="validate" id="FirstComicAppearance" type="password"> <label for="password">First Comic Appearance</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<input class="validate" id="MarvelCinematicAppearance" type="email"> <label for="email">Marvel Cinematic Appearances</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<input class="validate" id="playedBy" type="email"> <label for="email">Played by</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<input class="validate" id="createdBy" type="email"> <label for="email">Created by</label>
+						</div>
+					</div>
+				</form>
+			</div>
+	</div>
+</body>
+</html>
