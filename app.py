@@ -95,8 +95,92 @@ def getData(database):
 
         # Add to global array
         allData.append(data)
-    # return Data
-    return allData
+    # return
+    if allData:
+        return allData
+    else:  
+        return ""
+
+def getSearchData(database, searchInput):
+    print("searching for ", searchInput)
+    print("Now Search")
+    # Set global Array
+    allData = []
+    # Connect Database
+    connection = MongoClient(databaseConnection)
+    db = connection.marvelHeroes
+
+    # Connect correct table
+    collection = db[database]
+
+    # Get All Keys
+    keys = collection.find_one({})
+    # Loop through each key and search data
+    for key in keys:
+        # Get cursor
+        print("searching ", key)
+        print(searchInput)
+        cursor = collection.find({key: {"$regex": searchInput, "$options": 'i'}})
+        #cursor = collection.find({key: searchInput})
+        if cursor:
+            print("cursor = ",cursor)
+            # Get the data from cursor
+            for data in cursor:
+                print("data = ", data)
+                # If not null
+                if data:
+                    # Get Values out of data
+                    name = str(data.get("Name"))
+                    alias = str(data.get("Alias"))
+                    appearance = str(data.get("First Comic Appearance"))
+                    cinematicAppearances = str(data.get("Marvel Cinematic Appearance"))
+                    playedBy = str(data.get("Played by"))
+                    createdBy = str(data.get("Created by"))
+
+                    # Replace , with #
+                    name = replace(name)
+                    alias = replace(alias)
+                    appearance = replace(appearance)
+                    cinematicAppearances = replace(cinematicAppearances)
+                    playedBy = replace(playedBy)
+                    createdBy = replace(createdBy)
+
+                    # Initialise into a single string
+                    data = name + "," + alias + "," + appearance + ","  + cinematicAppearances + "," + playedBy  + ","  + createdBy
+
+                    # Add to global array
+                    allData.append(data)
+    if allData:
+        return allData
+    else:
+        return "Nothing"
+
+
+def searchData(searchInput):
+    # Global searchData
+    searchData = ""
+    # Seach Heroes
+    heroData = getSearchData("Heroes", searchInput)
+
+    # Now Villains
+    villainData = getSearchData("Villians", searchInput)
+
+
+    print("heroData = ", heroData)
+    print("villData = ", villainData)
+
+    if heroData == "Nothing" and villainData != "Nothing":
+        searchData = villainData
+    elif heroData != "Nothing" and villainData == "Nothing":
+        searchData = heroData
+    elif heroData != "Nothing" and villainData != "Nothing":
+        searchData = heroData + villainData
+        print(searchData)
+    else:
+        # No data found
+        print("Nadda")
+        searchData = "Nothing"
+    return searchData
 
 
 # Set Index page
@@ -121,25 +205,48 @@ def index():
 
 
 # Set Hero Page
-@app.route('/heroes/')
+@app.route('/heroes/', methods=["GET", "POST"])
 def heroes():
-    # Connecto to database and get hero data
-    heroData = getData("Heroes")
-    # Set Headers
-    headers = [
-        "Name",
-        "Alias",
-        "First Comic Appearance",
-        "Marvel Cinematic Appearance",
-        "Played By",
-        "Created By"
-    ]
-    # return Hers page
-    return render_template(
-        'heroes.html',
-        headers=headers,
-        values=heroData
-    )
+    if request.method == "POST":
+        userInput = request.form['search']
+        headers = [
+            "Name",
+            "Alias",
+            "First Comic Appearance",
+            "Marvel Cinematic Appearance",
+            "Played By",
+            "Created By"
+        ]
+        results = searchData(userInput)
+
+        if results != "Nothing":
+            return render_template(
+                "searchResults.html",
+                headers=headers,
+                values=results
+            )
+        else:
+            flash("Not found")
+            return redirect(url_for('heroes'))
+
+    else:
+        # Connecto to database and get hero data
+        heroData = getData("Heroes")
+        # Set Headers
+        headers = [
+            "Name",
+            "Alias",
+            "First Comic Appearance",
+            "Marvel Cinematic Appearance",
+            "Played By",
+            "Created By"
+        ]
+        # return Hers page
+        return render_template(
+            'heroes.html',
+            headers=headers,
+            values=heroData
+        )
 
 
 # Set Villain Page
@@ -241,6 +348,23 @@ def login():
     return render_template("login.html")
 
 
+@app.route("/searchResults", methods=["GET", "POST"])
+def searchResults(headers, results):
+    print("results =",results)
+    if results != "Nothing":
+        return render_template(
+            "searchResults.html",
+            headers=headers,
+            values=results
+        )
+    else:
+        # No data found
+        flash("No results found")
+        return redirect(url_for("heroes"))
+
+
+
+
 @app.route("/profile", methods=["GET", "POST"])
 def profile(username):
     return render_template("profile.html", username=username)
@@ -254,6 +378,7 @@ def add_hero():
 @app.route("/add_villain")
 def add_villain():
     return render_template("add_villain.html")
+
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),

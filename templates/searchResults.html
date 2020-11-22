@@ -24,7 +24,7 @@
                 <li><a href="{{ url_for( 'heroes') }}">Heroes</a></li>
                 <li><a href="{{ url_for( 'villains') }}">Villians</a></li>
                 <li><a href="{{ url_for( 'register') }}">Sign-Up</a></li>
-                <li><a href="{{ url_for('login') }}"><i class="material-icons">account_box</i></a></li>
+                <li><a href="{{ url_for( 'profile') }}"><i class="material-icons">account_box</i></a></li>
             </ul>
           
         
@@ -42,16 +42,6 @@
              <img src="{{ url_for('static', filename='Marvel1.jpg') }}" class="center responsive-image">
     </div> 
     </div>
-
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul class="flashes">
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
 
    <div class="center">
       <form method="post">
