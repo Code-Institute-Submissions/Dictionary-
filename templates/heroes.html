@@ -14,7 +14,27 @@
     <title>Marvel DB - Heroes</title>
 </head>
 <body background="{{ url_for('static', filename='css/img/background.jpg') }}">
+{% if user %}
     <nav class="nav-wrapper transparent">
+        <div class="conatainer">
+            <a href="#" class="sidenav-trigger" data-target="mobile-links">
+            <i class="material-icons">menu</i>
+            </a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="{{ url_for( 'index') }}">Home</a></li>
+                <li><a href="{{ url_for( 'heroes') }}">Heroes</a></li>
+                <li><a href="{{ url_for( 'villains') }}">Villians</a></li>
+            </ul>
+        </div>
+    </nav>
+    <ul class="sidenav" id="mobile-links">
+                <li><a href="{{ url_for( 'index') }}">Home</a></li>
+                <li><a href="{{ url_for( 'heroes') }}">Heroes</a></li>
+                <li><a href="{{ url_for( 'villains') }}">Villians</a></li>
+            </ul>
+
+            {% elif not user %}
+        <nav class="nav-wrapper transparent">
         <div class="conatainer">
             <a href="#" class="sidenav-trigger" data-target="mobile-links">
             <i class="material-icons">menu</i>
@@ -26,8 +46,6 @@
                 <li><a href="{{ url_for( 'register') }}">Sign-Up</a></li>
                 <li><a href="{{ url_for('login') }}"><i class="material-icons">account_box</i></a></li>
             </ul>
-          
-        
         </div>
     </nav>
     <ul class="sidenav" id="mobile-links">
@@ -36,31 +54,12 @@
                 <li><a href="{{ url_for( 'villains') }}">Villians</a></li>
                 <li><a href="{{ url_for( 'register') }}">Sign-Up</a></li>
             </ul>
+{% endif %}
  
     <div id="wrapperHeader">
     <div id="header">
              <img src="{{ url_for('static', filename='Marvel1.jpg') }}" class="center responsive-image">
     </div> 
-    </div>
-
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul class="flashes">
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
-
-   <div class="center">
-      <form method="post">
-        <div class="input-field grey lighten-2">
-          <input id="search" name="search" type="search" required>
-          <label for="search"><i class="material-icons">search</i></label>
-          <i class="material-icons red-text">close</i>
-        </div>
-      </form>
     </div>
 
 

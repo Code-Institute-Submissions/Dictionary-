@@ -120,10 +120,12 @@ def getSearchData(database, searchInput):
         # Get cursor
         print("searching ", key)
         print(searchInput)
-        cursor = collection.find({key: {"$regex": searchInput, "$options": 'i'}})
-        #cursor = collection.find({key: searchInput})
+        cursor = collection.find({key: {
+            "$regex": searchInput, "$options": 'i'}}
+            )
+        # cursor = collection.find({key: searchInput})
         if cursor:
-            print("cursor = ",cursor)
+            print("cursor = ", cursor)
             # Get the data from cursor
             for data in cursor:
                 print("data = ", data)
@@ -133,7 +135,9 @@ def getSearchData(database, searchInput):
                     name = str(data.get("Name"))
                     alias = str(data.get("Alias"))
                     appearance = str(data.get("First Comic Appearance"))
-                    cinematicAppearances = str(data.get("Marvel Cinematic Appearance"))
+                    cinematicAppearances = str(
+                        data.get("Marvel Cinematic Appearance")
+                        )
                     playedBy = str(data.get("Played by"))
                     createdBy = str(data.get("Created by"))
 
@@ -146,7 +150,12 @@ def getSearchData(database, searchInput):
                     createdBy = replace(createdBy)
 
                     # Initialise into a single string
-                    data = name + "," + alias + "," + appearance + ","  + cinematicAppearances + "," + playedBy  + ","  + createdBy
+                    data = name + ","
+                    + alias + ","
+                    + appearance + ","
+                    + cinematicAppearances + ","
+                    + playedBy  + ","
+                    + createdBy
 
                     # Add to global array
                     allData.append(data)
@@ -359,7 +368,7 @@ def searchResults(headers, results):
         )
     else:
         # No data found
-        flash("No results found")
+        flash("No results found, check spelling or sign in and add your own")
         return redirect(url_for("heroes"))
 
 

@@ -31,6 +31,27 @@
         <a class="waves-effect waves-light btn-large #d50000 red accent-4" style="margin-bottom: 25px;" onclick="window.location.href='{{ url_for( 'villains') }}';">Villains</a>
     </div>
 </div>
+    <h3> Search for your heroes </h3>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+   <div class="center">
+      <form method="post">
+        <div class="input-field grey lighten-2">
+          <input id="search" name="search" type="search" required>
+          <label for="search"><i class="material-icons">search</i></label>
+          <i class="material-icons red-text">close</i>
+        </div>
+      </form>
+    </div>
+    
     </body>
 </html>
 
