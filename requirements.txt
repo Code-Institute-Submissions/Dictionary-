@@ -3,6 +3,7 @@ dnspython==2.0.0
 environs==9.2.0
 flash==1.0.3
 Flask==1.1.2
+Flask-Login==0.5.0
 Flask-PyMongo==2.3.0
 Flask-WTF==0.14.3
 itsdangerous==1.1.0

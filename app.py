@@ -7,24 +7,20 @@ from flask import flash
 from flask import session
 from flask import url_for
 from flask_wtf import FlaskForm
-from wtforms import StringField
+from flask_login import LoginManager
+from flask_login import current_user, login_user, logout_user, login_required
+from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_pymongo import pymongo
 from pymongo import MongoClient
-
-
-# MyForm Class
-class MyForm(FlaskForm):
-    # Initilize a form
-    name = StringField('name', validators=[DataRequired()])
-
 
 if os.path.exists("env.py"):
     import env
 
 # Set Variables
 app = Flask(__name__)
+login = LoginManager(app)
 
 # Set Secret key (required by forms) - randmoly generated
 SECRET_KEY = os.urandom(32)
@@ -33,6 +29,42 @@ app.config['SECRET_KEY'] = SECRET_KEY
 # Set variables out of env.py
 databaseConnection = os.environ.get("MONGO_URI")
 dbName = os.environ.get("MONGO_DBNAME")
+connection = MongoClient(databaseConnection)
+db = connection.marvelHeroes
+
+
+class User:
+    def __init__(self, username):
+        self.username = username
+
+    def is_authenticated():
+        return True
+
+    def is_active():
+        return True
+
+    def is_anonymous():
+        return False
+
+    def get_id(self):
+        return self.username
+
+    def check_password(password_hash, password):
+        return check_password_hash(password_hash, password)
+
+
+# MyForm Class
+class MyForm(FlaskForm):
+    # Initilize a form
+    name = StringField('name', validators=[DataRequired()])
+
+
+@login.user_loader
+def load_user(username):
+    u = db['users'].find_one({"username": username})
+    if not u:
+        return None
+    return User(username=u['username'])
 
 
 # Replace function
@@ -63,9 +95,6 @@ def authCheck(string, dataType):
 
 # Get Data function and process
 def getData(database):
-    # Connect Database
-    connection = MongoClient(databaseConnection)
-    db = connection.marvelHeroes
     # Set Collection we should use
     collection = db[database]
     # Get ALL the data
@@ -98,12 +127,11 @@ def getData(database):
     # return
     if allData:
         return allData
-    else:  
+    else:
         return ""
 
+
 def getSearchData(database, searchInput):
-    print("searching for ", searchInput)
-    print("Now Search")
     # Set global Array
     allData = []
     # Connect Database
@@ -118,17 +146,13 @@ def getSearchData(database, searchInput):
     # Loop through each key and search data
     for key in keys:
         # Get cursor
-        print("searching ", key)
-        print(searchInput)
         cursor = collection.find({key: {
             "$regex": searchInput, "$options": 'i'}}
             )
         # cursor = collection.find({key: searchInput})
         if cursor:
-            print("cursor = ", cursor)
             # Get the data from cursor
             for data in cursor:
-                print("data = ", data)
                 # If not null
                 if data:
                     # Get Values out of data
@@ -174,20 +198,14 @@ def searchData(searchInput):
     # Now Villains
     villainData = getSearchData("Villians", searchInput)
 
-
-    print("heroData = ", heroData)
-    print("villData = ", villainData)
-
     if heroData == "Nothing" and villainData != "Nothing":
         searchData = villainData
     elif heroData != "Nothing" and villainData == "Nothing":
         searchData = heroData
     elif heroData != "Nothing" and villainData != "Nothing":
         searchData = heroData + villainData
-        print(searchData)
     else:
         # No data found
-        print("Nadda")
         searchData = "Nothing"
     return searchData
 
@@ -250,7 +268,7 @@ def heroes():
             "Played By",
             "Created By"
         ]
-        # return Hers page
+        # return Hero page
         return render_template(
             'heroes.html',
             headers=headers,
@@ -326,40 +344,48 @@ def register():
 # Log-in page
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
-        username = request.form['username']
-        password = request.form['password']
+    if current_user.is_authenticated:
+        return redirect(url_for('profile', username=User))
+    else:
+        if request.method == "POST":
+            username = request.form['username']
+            password = request.form['password']
+            connection = MongoClient(databaseConnection)
+            db = connection.marvelHeroes
+            # Set Collection we should use
+            collection = db["users"]
+            # Get ALL the data
+            existing_user = collection.find_one(
+                {"username": username}
+            )
 
-        connection = MongoClient(databaseConnection)
-        db = connection.marvelHeroes
-        # Set Collection we should use
-        collection = db["users"]
-        # Get ALL the data
-        existing_user = collection.find_one(
-            {"username": username}
-        )
-
-        if existing_user:
-            # ensure hashed password matches user input
-            if check_password_hash(existing_user["password"], password):
-                lowUser = username.lower()
-                session["user"] = username
-                flash("Welcome, {}".format(username))
-                return render_template("profile.html", username=lowUser)
+            if existing_user:
+                # ensure hashed password matches user input
+                if check_password_hash(existing_user["password"], password):
+                    session["user"] = username
+                    flash("Welcome, {}".format(username))
+                    user_obj = User(username=username)
+                    login_user(user_obj)
+                    return redirect(url_for("profile"))
+                else:
+                    # invalid password match
+                    flash("Incorrect Username and/or Password")
+                    return redirect(url_for("login"))
             else:
-                # invalid password match
+                # username doesn't exist
                 flash("Incorrect Username and/or Password")
                 return redirect(url_for("login"))
-        else:
-            # username doesn't exist
-            flash("Incorrect Username and/or Password")
-            return redirect(url_for("login"))
     return render_template("login.html")
+
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 
 @app.route("/searchResults", methods=["GET", "POST"])
 def searchResults(headers, results):
-    print("results =",results)
     if results != "Nothing":
         return render_template(
             "searchResults.html",
@@ -372,10 +398,9 @@ def searchResults(headers, results):
         return redirect(url_for("heroes"))
 
 
-
-
 @app.route("/profile", methods=["GET", "POST"])
-def profile(username):
+def profile():
+    username = current_user.get_id()
     return render_template("profile.html", username=username)
 
 
