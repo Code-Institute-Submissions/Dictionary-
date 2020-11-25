@@ -8,49 +8,70 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css"><!--Custom CSS-->
 	<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css">
-
 	<title>Marvel DB - Add A Villain</title>
-
 </head>
-<body background="{{  url_for('static',  filename='css/img/background.jpg')  }}">
-	   <nav class="nav-wrapper transparent">
-        <div class="conatainer">
-            <a href="#" class="sidenav-trigger" data-target="mobile-links">
-            <i class="material-icons">menu</i>
-            </a>
-            <ul class="right hide-on-med-and-down">
-                <li><a href="{{ url_for( 'index') }}">Home</a></li>
-                <li><a href="{{ url_for( 'heroes') }}">Heroes</a></li>
-                <li><a href="{{ url_for( 'villains') }}">Villians</a></li>
-                <li><a href="{{ url_for( 'register') }}">Sign-Up</a></li>
-                <li><a href="{{ url_for('profile.html') }}"><i class="material-icons">account_box</i></a></li>
-            </ul>
-          
-        
-        </div>
-    </nav>
-    <ul class="sidenav" id="mobile-links">
-                <li><a href="{{ url_for( 'index') }}">Home</a></li>
-                <li><a href="{{ url_for( 'heroes') }}">Heroes</a></li>
-                <li><a href="{{ url_for( 'villains') }}">Villians</a></li>
-                <li><a href="{{ url_for( 'register') }}">Sign-Up</a></li>
-                <li><a href="{{ url_for('profile.html') }}"><i class="material-icons">account_box</i></a></li>
-            </ul>
+<body background="{{ url_for('static', filename='css/img/background.jpg') }}">
+	<nav class="nav-wrapper transparent">
+		<div class="conatainer">
+			<a class="sidenav-trigger" data-target="mobile-links" href="#"><i class="material-icons">menu</i></a>
+			<ul class="right hide-on-med-and-down">
+				<li>
+					<a href="{{ url_for( 'index') }}">Home</a>
+				</li>
+				<li>
+					<a href="{{ url_for( 'heroes') }}">Heroes</a>
+				</li>
+				<li>
+					<a href="{{ url_for( 'villains') }}">Villians</a>
+				</li>
+				<li>
+					<a href="{{ url_for( 'register') }}">Sign-Up</a>
+				</li>
+				<li>
+					<a href="{{ url_for('login') }}"><i class="material-icons">account_box</i></a>
+				</li>
+				<li>
+					<a href="{{ url_for('logout') }}"><i class="material-icons">exit_to_app</i></a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<ul class="sidenav" id="mobile-links">
+		<li>
+			<a href="{{ url_for( 'index') }}">Home</a>
+		</li>
+		<li>
+			<a href="{{ url_for( 'heroes') }}">Heroes</a>
+		</li>
+		<li>
+			<a href="{{ url_for( 'villains') }}">Villians</a>
+		</li>
+		<li>
+			<a href="{{ url_for( 'register') }}">Sign-Up</a>
+		</li>
+		<li>
+			<a href="{{ url_for('login') }}"><i class="material-icons">account_box</i></a>
+		</li>
+		<li>
+			<a href="{{ url_for('logout') }}"><i class="material-icons">exit_to_app</i></a>
+		</li>
+	</ul>
 	<div id="wrapperHeader">
-		<div id="header"><img class="center" src="{{  url_for('static',  filename='Marvel1.jpg')  }}"></div>
+		<div id="header"><img class="center" src="{{ url_for('static', filename='Marvel1.jpg') }}"></div>
 	</div>
-	<h1 class="center white-text text-lighten-2">Sign-Up</h1>
-	<div class="containter white-text text-lighten-2">
+	<h1 class="center white-text text-lighten-2">Add a Villain</h1>
+	<div class="card-panel container center">
+		<div class="containter white-text text-lighten-2">
 			<div class="row">
 				<form class="col s12">
 					<div class="row">
 						<div class="input-field col s6">
-							<input class="validate" id="first_name" placeholder="Placeholder" type="text"> <label for="Name">Name</label>
+							<input class="validate" id="first_name" type="text"><label for="name">Name</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s12">
-							<input class="validate" disabled id="disabled" type="text" value="I am not editable"> <label for="alias">Alias</label>
+							<input class="validate" id="alias" type="text"> <label for="alias">Alias</label>
 						</div>
 					</div>
 					<div class="row">
@@ -75,6 +96,7 @@
 					</div>
 				</form>
 			</div>
+		</div>
 	</div>
 </body>
 </html>
