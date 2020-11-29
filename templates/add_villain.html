@@ -60,41 +60,56 @@
 		<div id="header"><img class="center" src="{{ url_for('static', filename='Marvel1.jpg') }}"></div>
 	</div>
 	<h1 class="center white-text text-lighten-2">Add a Villain</h1>
-	<div class="card-panel container center">
+	{% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <div class="card-panel container center">
 		<div class="containter white-text text-lighten-2">
 			<div class="row">
 				<form class="col s12">
 					<div class="row">
 						<div class="input-field col s6">
-							<input class="validate" id="first_name" type="text"><label for="name">Name</label>
+						    <input class="validate" id="name" name="name" type="text">
+                            <label for="name">Name</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s12">
-							<input class="validate" id="alias" type="text"> <label for="alias">Alias</label>
+							<input class="validate" id="alias" type="text" name="alias">
+                            <label for="alias">Alias</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s12">
-							<input class="validate" id="FirstComicAppearance" type="password"> <label for="password">First Comic Appearance</label>
+							<input class="validate" id="FirstComicAppearance" type="text" name="FirstComicAppearance">
+                            <label for="firstComicappearance">First Comic Appearance</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s12">
-							<input class="validate" id="MarvelCinematicAppearance" type="text"> <label for="email">Marvel Cinematic Appearances</label>
+							<input class="validate" id="MarvelCinematicAppearance" type="text" name="MarvelCinematicAppearance">
+                            <label for="marvelCinematicAppearances">Marvel Cinematic Appearances</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s12">
-							<input class="validate" id="playedBy" type="text"> <label for="email">Played by</label>
+							<input class="validate" id="playedBy" type="text" name="playedBy">
+                            <label for="playedBy">Played by</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s12">
-							<input class="validate" id="createdBy" type="text"> <label for="email">Created by</label>
+							<input class="validate" id="createdBy" type="text" name="createdBy">
+                            <label for="createdBy">Created by</label>
 						</div>
 					</div>
-                    <button type="sumbit" formmethod="post" onclick="window.location.href='{{ url_for('profile') }}';" class="btn waves-effect #d50000 red accent-4 col s12">
+                    <button type="submit" formmethod="post" onclick="window.location.href='{{ url_for('add_villain') }}';" class="btn waves-effect #d50000 red accent-4 col s12">
                     Submit</button>
 				</form>
 			</div>

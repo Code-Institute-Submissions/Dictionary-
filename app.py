@@ -8,11 +8,10 @@ from flask import session
 from flask import url_for
 from flask_wtf import FlaskForm
 from flask_login import LoginManager
-from flask_login import current_user, login_user, logout_user, login_required
-from wtforms import StringField, SubmitField, PasswordField
+from flask_login import current_user, login_user, logout_user
+from wtforms import StringField
 from wtforms.validators import DataRequired
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_pymongo import pymongo
 from pymongo import MongoClient
 
 if os.path.exists("env.py"):
@@ -82,7 +81,11 @@ def authCheck(string, dataType):
 
     # Max 15
     if len(string) > 15:
-        flash("Ensure " + dataType + " username has a maximum of 15 characters")
+        flash(
+            "Ensure " +
+            dataType +
+            " username has a maximum of 15 characters"
+        )
         return(bool(False))
 
     # No spaces
@@ -120,7 +123,14 @@ def getData(database):
         createdBy = replace(createdBy)
 
         # Initialise into a single string
-        data = name + "," + alias + "," + appearance + ","  + cinematicAppearances + "," + playedBy  + ","  + createdBy
+        data = (
+            name + "," +
+            alias + "," +
+            appearance + "," +
+            cinematicAppearances + "," +
+            playedBy + "," +
+            createdBy
+        )
 
         # Add to global array
         allData.append(data)
@@ -174,12 +184,14 @@ def getSearchData(database, searchInput):
                     createdBy = replace(createdBy)
 
                     # Initialise into a single string
-                    data = name + ","
-                    + alias + ","
-                    + appearance + ","
-                    + cinematicAppearances + ","
-                    + playedBy  + ","
-                    + createdBy
+                    data = (
+                        name + "," +
+                        alias + "," +
+                        appearance + "," +
+                        cinematicAppearances + "," +
+                        playedBy + "," +
+                        createdBy
+                    )
 
                     # Add to global array
                     allData.append(data)
@@ -210,25 +222,86 @@ def searchData(searchInput):
     return searchData
 
 
+def checkVariable(input):
+    if input:
+        return input
+    else:
+        return "None"
+
+
+def checkDatabase(name, alias, database):
+    collection = db[database]
+    nameCheck = collection.find({"Name": name})
+    aliasCheck = collection.find({"Alias": alias})
+
+    if nameCheck or aliasCheck:
+        return "Exists"
+    else:
+        return "None"
+
+
+def databaseAdd(
+    name,
+    alias,
+    firstComiCappearance,
+    MarvelCinematicAppearance,
+    playedBy,
+    createdBy,
+    database
+):
+    collection = db[database]
+    data = {
+        "Name": name,
+        "Alias": alias,
+        "First Comic Appearance": firstComiCappearance,
+        "Marvel Cinematic Appearance": MarvelCinematicAppearance,
+        "Played by": playedBy,
+        "Created by": createdBy
+    }
+    collection.insert_one(data)
+
+
 # Set Index page
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def index():
-    # Initialize MyForm class
-    form = MyForm()
-    # If there is a submit button pressed (button)
-    if form.validate_on_submit():
-        # If it means hero's
-        if 'Heroes' in request.form:
-            # return hero page
-            render_template('heroes.html')
-        elif 'Villains' in request.form:
-            # return villain page
-            render_template('villains.html')
-            'Register' in request.form
-            # return register page
-            render_template('register.html')
-    # No button pressed, return home page
-    return render_template('index.html')
+    if request.method == "POST":
+        # Initialize MyForm class
+        form = MyForm()
+        #  If there is a submit button pressed (button)
+        if form.validate_on_submit():
+            # If it means hero's
+            if 'Heroes' in request.form:
+                # return hero page
+                render_template('heroes.html')
+            elif 'Villains' in request.form:
+                # return villain page
+                render_template('villains.html')
+            elif 'Register' in request.form:
+                # return register page
+                render_template('register.html')
+        else:
+            # POST without submit
+            if 'search' in request.form:
+                userInput = request.form['search']
+                headers = [
+                    "Name",
+                    "Alias",
+                    "First Comic Appearance",
+                    "Marvel Cinematic Appearance",
+                    "Played By",
+                    "Created By"
+                ]
+                results = searchData(userInput)
+                if results != "Nothing":
+                    return render_template(
+                        "searchResults.html",
+                        headers=headers,
+                        values=results
+                    )
+                else:
+                    flash("Not found")
+                    return redirect(url_for('heroes'))
+    return render_template("index.html")
 
 
 # Set Hero Page
@@ -255,7 +328,6 @@ def heroes():
         else:
             flash("Not found")
             return redirect(url_for('heroes'))
-
     else:
         # Connecto to database and get hero data
         heroData = getData("Heroes")
@@ -305,11 +377,9 @@ def register():
         # Set variables
         username = request.form['username']
         password = request.form['password']
-
         # Run auth checks
         userCheck = authCheck(username, "username")
         passCheck = authCheck(password, "password")
-
         if userCheck is not True or passCheck is not True:
             return redirect(url_for('register'))
         else:
@@ -322,17 +392,14 @@ def register():
             existing_user = collection.find_one(
                 {"username": username}
             )
-
             if existing_user:
                 flash("Username already exists")
                 return redirect(url_for('register'))
-
             register = {
                 "username": username,
                 "password": generate_password_hash(password)
             }
             collection.insert_one(register)
-
             # Put the new user into 'session' cookie
             session["user"] = username
             flash("Registration Successfull")
@@ -358,7 +425,6 @@ def login():
             existing_user = collection.find_one(
                 {"username": username}
             )
-
             if existing_user:
                 # ensure hashed password matches user input
                 if check_password_hash(existing_user["password"], password):
@@ -404,14 +470,85 @@ def profile():
     return render_template("profile.html", username=username)
 
 
-@app.route("/add_hero")
+@app.route("/add_hero", methods=["GET", "POST"])
 def add_hero():
-    return render_template("add_villain.html")
+    if request.method == "POST":
+        name = request.form['name']
+        alias = request.form['alias']
+        firstComiCappearance = request.form['FirstComicAppearance']
+        MarvelCinematicAppearance = request.form['MarvelCinematicAppearance']
+        playedBy = request.form['playedBy']
+        createdBy = request.form['createdBy']
+        # ensure variables pass checks
+        name = checkVariable(name)
+        alias = checkVariable(alias)
+        firstComiCappearance = checkVariable(firstComiCappearance)
+        MarvelCinematicAppearance = checkVariable(MarvelCinematicAppearance)
+        playedBy = checkVariable(playedBy)
+        createdBy = checkVariable(createdBy)
+        if name == "None" and alias == "None":
+            flash("Name or alias must be set")
+            return redirect(url_for("add_hero"))
+        # Now ensure Name and alias does not already appear in database
+        databaseCheck = checkDatabase(name, alias, "Heroes")
+        if databaseCheck == "Exists":
+            flash("Name or alias already exists in database")
+            return redirect(url_for("add_hero"))
+        # Okay now add to database
+        databaseAdd(
+            name,
+            alias,
+            firstComiCappearance,
+            MarvelCinematicAppearance,
+            playedBy,
+            createdBy,
+            "Heroes"
+        )
+
+        flash("Hero Added")
+        return redirect(url_for("heroes"))
+    else:
+        return render_template("add_hero.html")
 
 
-@app.route("/add_villain")
+@app.route("/add_villain", methods=["GET", "POST"])
 def add_villain():
-    return render_template("add_villain.html")
+    if request.method == "POST":
+        name = request.form['name']
+        alias = request.form['alias']
+        firstComiCappearance = request.form['FirstComicAppearance']
+        MarvelCinematicAppearance = request.form['MarvelCinematicAppearance']
+        playedBy = request.form['playedBy']
+        createdBy = request.form['createdBy']
+        # ensure variables pass checks
+        name = checkVariable(name)
+        alias = checkVariable(alias)
+        firstComiCappearance = checkVariable(firstComiCappearance)
+        MarvelCinematicAppearance = checkVariable(MarvelCinematicAppearance)
+        playedBy = checkVariable(playedBy)
+        createdBy = checkVariable(createdBy)
+        if name == "None" and alias == "None":
+            flash("Name or alias must be set")
+            return redirect(url_for("add_villain"))
+        # Now ensure Name and alias does not already appear in database
+        databaseCheck = checkDatabase(name, alias, "Heroes")
+        if databaseCheck == "Exists":
+            flash("Name or alias already exists in database")
+            return redirect(url_for("add_hero"))
+        # Okay now add to database
+        databaseAdd(
+            name,
+            alias,
+            firstComiCappearance,
+            MarvelCinematicAppearance,
+            playedBy,
+            createdBy,
+            "Villians"
+        )
+        flash("villain Added")
+        return redirect(url_for("villains"))
+    else:
+        return render_template("add_hero.html")
 
 
 if __name__ == '__main__':

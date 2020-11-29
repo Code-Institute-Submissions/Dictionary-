@@ -52,15 +52,7 @@
     </div>
 
     
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul class="flashes">
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
+   
     <h1 class="center white-text text-lighten-2"> Log in </h1>
 <div id="register-page" class="row">
         <div class="card-panel container center">
@@ -81,9 +73,18 @@
 					<label for="user_passw" class="#d50000 red accent-4" ></label>
 			</div>
         </div>    
+         {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes red accent-4">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
 	    <div class="row">
 			<div class="input-field col s12">
-                <button type="sumbit" formmethod="post" onclick="window.location.href='{{ url_for('profile') }}';" class="btn waves-effect #d50000 red accent-4 col s12">
+                <button type="submit" formmethod="post" onclick="window.location.href='{{ url_for('profile') }}';" class="btn waves-effect #d50000 red accent-4 col s12">
                     Log in</button>
 			</div>
 			<div class="input-field col s12">

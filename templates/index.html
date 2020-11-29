@@ -34,7 +34,7 @@
     <h3 class="center white-text text-lighten-2"> Search for Your favourite Heroes or Villains</h3>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
-            <ul class="flashes">
+            <ul class="flashes red accent-4">
                 {% for message in messages %}
                     <li>{{ message }}</li>
                 {% endfor %}
